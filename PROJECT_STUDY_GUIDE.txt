@@ -1,0 +1,583 @@
+SMART LEARNING ASSISTANT
+Complete Project Study Guide
+
+==================================================
+1. PROJECT TITLE
+==================================================
+Smart Learning Assistant using RAG and Generative AI
+
+==================================================
+2. PROJECT IDEA
+==================================================
+This project is an AI-powered academic platform designed for students.
+It helps users:
+- learn from uploaded PDF notes
+- summarize content
+- ask questions from documents using RAG
+- generate quizzes
+- review resumes
+- prepare for interviews
+- get career guidance
+- debug code and receive optimized suggestions
+
+The goal is to combine traditional web development with modern AI services
+to build a practical educational product.
+
+==================================================
+3. PROBLEM STATEMENT
+==================================================
+Students often struggle with:
+- large study materials
+- quick revision before exams
+- extracting important concepts from notes
+- preparing resumes and interviews
+- getting personalized academic support
+
+This project solves that by providing one platform where AI assists the student
+through learning, preparation, and career planning.
+
+==================================================
+4. OBJECTIVES
+==================================================
+Main objectives:
+- build a student-focused AI dashboard
+- enable PDF-based question answering using RAG
+- provide personalized academic and career support
+- create a professional full-stack product, not just a demo
+- use Generative AI in a real-world workflow
+
+==================================================
+5. TECH STACK
+==================================================
+Frontend:
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- custom shadcn-style UI components
+- Lucide icons
+
+Backend:
+- FastAPI
+- Python
+
+Database:
+- SQLite
+
+AI:
+- Google Gemini API
+
+RAG Components:
+- FAISS
+- SentenceTransformers
+
+Document Processing:
+- pypdf
+
+Authentication:
+- hashed passwords
+- signed token-based auth
+
+==================================================
+6. HIGH-LEVEL ARCHITECTURE
+==================================================
+User -> React Frontend -> FastAPI Backend -> SQLite / FAISS / Gemini API
+
+System flow:
+1. User opens frontend dashboard
+2. User signs in or registers
+3. Frontend sends requests to backend APIs
+4. Backend handles business logic
+5. SQLite stores users, files, and chat history
+6. Uploaded PDFs are processed and indexed
+7. Gemini generates AI responses
+8. Frontend displays formatted output
+
+==================================================
+7. FOLDER STRUCTURE
+==================================================
+smart_learning_assistant/
+|- frontend/
+|- backend/
+|- uploads/
+|- faiss_indexes/
+|- .env
+|- .env.example
+|- README.md
+|- PROJECT_STUDY_GUIDE.txt
+
+Frontend important folders:
+- src/pages
+- src/components
+- src/hooks
+- src/services
+
+Backend important files:
+- main.py
+- database.py
+- rag.py
+- ai_services.py
+- auth.py
+
+==================================================
+8. CORE MODULES
+==================================================
+1. Dashboard
+- shows stats
+- recent activity
+- recent files
+- quick action buttons
+
+2. Learning Assistant
+- upload PDF
+- summarize PDF
+- generate bullet notes
+- explain difficult concepts
+- ask questions from document using RAG
+
+3. Quiz Generator
+- creates MCQs
+- viva questions
+- important questions
+- short answer questions
+
+4. Resume Assistant
+- upload or paste resume
+- get ATS score
+- identify missing keywords
+- provide improvement tips
+
+5. Interview Preparation
+- HR questions
+- technical questions
+- mock interview prompts
+- communication tips
+
+6. Career Guidance
+- roadmap suggestions
+- skills to learn
+- project ideas
+- higher study options
+- job readiness guidance
+
+7. Code Debugger
+- upload source file or paste code
+- detect issues
+- explain root cause
+- suggest fixes
+- recommend optimized solution if needed
+
+8. Profile
+- shows signed-in user details
+
+==================================================
+9. AUTHENTICATION WORKFLOW
+==================================================
+The application now supports real authentication.
+
+Register flow:
+1. User enters name, email, and password
+2. Backend checks whether email already exists
+3. Password is hashed
+4. User is stored in SQLite
+5. Backend returns signed token + user details
+6. Frontend stores session in localStorage
+
+Login flow:
+1. User enters email and password
+2. Backend checks user record
+3. Password is verified against stored hash
+4. Signed token is returned
+5. Frontend stores session
+
+Protected APIs:
+- upload
+- files/recent
+- dashboard/stats
+- summarize
+- ask
+- quiz
+- resume
+- interview
+- career
+- code-debug
+
+==================================================
+10. DATABASE DESIGN
+==================================================
+Table 1: users
+- id
+- email
+- name
+- password_hash
+- created_at
+
+Table 2: uploaded_files
+- id
+- filename
+- filepath
+- file_size
+- upload_time
+
+Table 3: chat_history
+- id
+- module
+- question
+- answer
+- created_at
+
+Current note:
+- the app stores users separately
+- some study/file history is still global in logic unless extended further
+
+==================================================
+11. PDF LEARNING WORKFLOW
+==================================================
+When a user uploads a PDF:
+1. Frontend uploads the file to backend
+2. Backend saves the PDF in uploads/
+3. pypdf extracts text from the PDF
+4. Text is split into overlapping chunks
+5. SentenceTransformers converts chunks into embeddings
+6. FAISS creates a vector index
+7. Index is saved in faiss_indexes/
+8. File metadata is stored in SQLite
+
+Benefits:
+- user can reopen files later
+- summaries can be regenerated
+- questions can be asked again
+- quiz can be generated again
+
+==================================================
+12. RAG WORKFLOW
+==================================================
+RAG means Retrieval-Augmented Generation.
+
+In this project:
+1. User asks a question about an uploaded PDF
+2. Question is converted into an embedding
+3. FAISS searches similar document chunks
+4. Most relevant chunks are retrieved
+5. Gemini receives:
+   - user question
+   - retrieved context
+6. Gemini generates a grounded answer
+7. Frontend displays the formatted result
+
+Why RAG is important:
+- reduces hallucination
+- improves relevance
+- makes answers document-based
+
+==================================================
+13. GEMINI USAGE
+==================================================
+Gemini is used for:
+- summaries
+- bullet notes
+- difficult concept explanation
+- document question answering
+- quiz generation
+- resume review
+- interview preparation
+- career guidance
+- code debugging
+
+Prompt design strategy:
+- backend sends role-based prompts
+- responses are requested in structured sections
+- frontend formats the output for readability
+
+==================================================
+14. FRONTEND DESIGN APPROACH
+==================================================
+The UI is designed like a modern SaaS product.
+
+Design choices:
+- dark theme
+- glassmorphism panels
+- responsive grid layout
+- left sidebar navigation
+- topbar with account access
+- larger readable typography
+- formatted AI outputs
+- status cards and charts
+- clean spacing and hover effects
+
+Why this matters:
+- makes the project presentation-ready
+- feels professional
+- improves user experience
+
+==================================================
+15. BACKEND RESPONSIBILITIES
+==================================================
+The FastAPI backend handles:
+- authentication
+- file upload
+- PDF processing
+- FAISS indexing
+- Gemini prompt handling
+- database operations
+- API response formatting
+
+Key backend files:
+
+main.py
+- defines all API endpoints
+- manages request/response flow
+
+database.py
+- initializes SQLite tables
+- creates and fetches data
+
+rag.py
+- extracts PDF text
+- chunks content
+- generates embeddings
+- creates and loads FAISS indexes
+
+ai_services.py
+- talks to Gemini
+- prepares prompts
+- parses structured responses
+
+auth.py
+- hashes passwords
+- verifies passwords
+- creates signed tokens
+- decodes tokens
+
+==================================================
+16. IMPORTANT API ENDPOINTS
+==================================================
+Authentication:
+- POST /register
+- POST /login
+
+Dashboard and files:
+- POST /upload
+- GET /files/recent
+- GET /dashboard/stats
+
+Learning:
+- POST /summarize/{file_id}
+- POST /ask/{file_id}
+- POST /quiz/{file_id}
+
+Career support:
+- POST /resume
+- POST /resume/upload
+- POST /interview
+- POST /career
+
+Code tools:
+- POST /code-debug
+- POST /code-debug/upload
+
+==================================================
+17. HOW EACH MAJOR FEATURE WORKS
+==================================================
+A. Summarization
+- backend reads stored indexed file
+- text is sent to Gemini
+- Gemini returns summary, notes, concept explanation
+
+B. Question Answering
+- backend retrieves relevant chunks using FAISS
+- Gemini answers using only context
+
+C. Quiz Generation
+- Gemini creates structured questions from PDF content
+
+D. Resume Analysis
+- resume text is extracted or pasted
+- Gemini returns ATS score, strengths, gaps, keywords, tips
+
+E. Interview Preparation
+- Gemini generates grouped interview guidance
+
+F. Career Guidance
+- Gemini returns roadmap phases and job preparation guidance
+
+G. Code Debugger
+- code file or pasted code is sent
+- Gemini detects issues
+- response is kept concise and structured
+
+==================================================
+18. WHY THIS PROJECT IS GOOD FOR FINAL YEAR
+==================================================
+This project demonstrates:
+- full-stack web development
+- AI integration
+- vector search
+- retrieval-based answering
+- authentication
+- structured UI/UX thinking
+- database design
+- API development
+- real-world educational use case
+
+It is stronger than a basic chatbot because it includes:
+- document intelligence
+- persistent storage
+- multi-module design
+- role-based prompting
+- professional dashboard
+
+==================================================
+19. TOOLS AND LIBRARIES EXPLAINED
+==================================================
+React:
+- builds the frontend UI
+
+TypeScript:
+- adds type safety to frontend code
+
+Vite:
+- fast frontend development server
+
+Tailwind CSS:
+- utility-first styling
+
+FastAPI:
+- modern Python backend framework
+
+SQLite:
+- lightweight database
+
+pypdf:
+- extracts text from PDF files
+
+SentenceTransformers:
+- converts text into vector embeddings
+
+FAISS:
+- stores and searches embeddings efficiently
+
+Google Gemini API:
+- generates AI responses
+
+==================================================
+20. SECURITY APPROACH
+==================================================
+Implemented:
+- hashed passwords
+- signed tokens
+- protected routes
+- no hardcoded Gemini key
+
+Stored in .env:
+- GEMINI_API_KEY
+- VITE_API_URL
+- APP_SECRET_KEY
+
+==================================================
+21. LIMITATIONS
+==================================================
+Current limitations:
+- uploaded files and dashboard data are not fully separated per user in all queries
+- no forgot password feature
+- no editable profile yet
+- PDF text extraction depends on readable PDF text
+- scanned image PDFs may need OCR in future
+
+==================================================
+22. FUTURE SCOPE
+==================================================
+Possible improvements:
+- per-user file ownership
+- OCR for scanned PDFs
+- multi-file semantic search
+- chat memory per subject
+- avatar upload
+- password reset
+- role-based admin panel
+- export quiz/summary as PDF
+- voice assistant
+
+==================================================
+23. HOW TO EXPLAIN THIS IN A PPT
+==================================================
+Suggested PPT flow:
+
+Slide 1:
+Project title
+
+Slide 2:
+Problem statement
+
+Slide 3:
+Objectives
+
+Slide 4:
+Tech stack
+
+Slide 5:
+System architecture
+
+Slide 6:
+Database design
+
+Slide 7:
+RAG workflow
+
+Slide 8:
+Authentication flow
+
+Slide 9:
+Main modules
+
+Slide 10:
+Learning assistant demo flow
+
+Slide 11:
+Resume, interview, career, debugger modules
+
+Slide 12:
+Advantages and real-world impact
+
+Slide 13:
+Limitations and future scope
+
+Slide 14:
+Conclusion
+
+==================================================
+24. SHORT VIVA ANSWERS
+==================================================
+Q. What is RAG?
+A. RAG stands for Retrieval-Augmented Generation. It retrieves relevant document chunks first and then sends them to the language model to generate more accurate answers.
+
+Q. Why use FAISS?
+A. FAISS is efficient for similarity search over vector embeddings. It helps retrieve relevant text chunks quickly.
+
+Q. Why use SentenceTransformers?
+A. It converts text into embeddings that capture semantic meaning, which is required for vector search.
+
+Q. Why use Gemini?
+A. Gemini provides strong generative capabilities for summarization, question answering, and guidance generation.
+
+Q. Why SQLite?
+A. SQLite is lightweight, easy to set up, and suitable for small to medium academic projects.
+
+Q. Why FastAPI?
+A. FastAPI is fast, simple, modern, and ideal for building Python AI APIs.
+
+Q. What makes this project different from a normal chatbot?
+A. It uses uploaded documents, persistent storage, RAG retrieval, structured modules, and multiple academic support features.
+
+==================================================
+25. SIMPLE PROJECT SUMMARY
+==================================================
+Smart Learning Assistant is a full-stack AI education platform where users can upload study PDFs, generate summaries, ask document-based questions with RAG, create quizzes, improve resumes, prepare for interviews, get career roadmaps, and debug code. It uses React for the frontend, FastAPI for the backend, SQLite for storage, FAISS plus SentenceTransformers for retrieval, and Gemini for AI generation.
+
+==================================================
+26. FINAL CONCLUSION
+==================================================
+This project combines AI, web development, and real student utility into one professional system.
+It is not just a prototype chatbot. It is a multi-feature academic assistant that shows both technical depth and product thinking.
+
+End of Study Guide

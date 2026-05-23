@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-slate-950 text-slate-100 font-sans antialiased;
+    background-image:
+      radial-gradient(circle at top, rgba(34, 211, 238, 0.12), transparent 28%),
+      radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.16), transparent 22%),
+      linear-gradient(180deg, #020617 0%, #020617 100%);
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+}
+
+@layer utilities {
+  .glass-panel {
+    @apply border border-white/10 bg-white/5 backdrop-blur-xl shadow-glow;
+  }
+
+  .page-shell {
+    @apply relative min-h-screen overflow-hidden;
+  }
+
+  .page-shell::before {
+    content: "";
+    @apply absolute inset-0 opacity-20;
+    background-image: radial-gradient(circle at 1px 1px, rgba(148, 163, 184, 0.18) 1px, transparent 0);
+    background-size: 28px 28px;
+    pointer-events: none;
+  }
+}
